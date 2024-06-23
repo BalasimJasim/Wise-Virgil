@@ -1,0 +1,156 @@
+.book {
+  padding: 30px;
+  background-color: #f9f9f9;
+}
+
+.book-content {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.book-content-img {
+  width: 30%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+.book-content-info {
+  width: 70%;
+}
+
+.book-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.book-author {
+  color: gray;
+  font-size: 21px;
+  margin: 15px 0;
+  font-weight: 600;
+
+  span {
+    color: teal;
+  }
+}
+
+.book-add-to-cart {
+  display: flex;
+  align-items: center;
+  margin: 30px 0;
+}
+
+.book-add-to-cart-input {
+  margin-right: 15px;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 60px;
+}
+
+.book-add-to-cart-btn {
+  border: 1px solid green;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: green;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  transition: background-color 0.3s ease-in-out;
+
+  i {
+    margin-right: 5px;
+  }
+
+  &:hover {
+    background-color: darkgreen;
+  }
+}
+
+.book-description {
+  width: 100%;
+  font-size: 18px;
+  line-height: 1.6;
+  margin-top: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.book-icons {
+  display: flex;
+  align-items: center;
+  margin: 30px 0;
+}
+
+.book-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 50px;
+  font-size: 18px;
+  color: teal;
+
+  small {
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  i {
+    font-size: 32px;
+    margin: 5px 0;
+  }
+}
+
+/* Media Queries */
+@media (max-width: 720px) {
+  .book {
+    padding: 20px 10px;
+  }
+
+  .book-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .book-content-img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  .book-content-info {
+    width: 100%;
+    text-align: center;
+  }
+
+  .book-add-to-cart {
+    flex-direction: column;
+  }
+
+  .book-add-to-cart-input {
+    margin-bottom: 15px;
+  }
+
+  .book-icons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .book-icon {
+    margin-bottom: 20px;
+  }
+}
