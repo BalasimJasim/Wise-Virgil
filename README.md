@@ -1,122 +1,43 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { User } from "../models/UserModel.js";
-import VerificationToken from "../models/verificationToken.js";
+# Book Store Project
 
-import sendEmail from "../utils/sendEmail.js";
-import crypto from "crypto";
-export const registerUser = async (req, res, next) => {
-try {
-const {
-firstName,
-lastName,
-email,
-password,
-address: { street, city, state, postalCode },
-phoneNumber,
-bonusPoints,
-} = req.body;
+This is a React project that simulates a book store, featuring various components such as a navigation bar with links to Home, Authors, Cart, Contact Us, and more.
 
-    const user = await User.findOne({ email });
-    if (user) {
-      return res.status(400).json({ error: "User already exists" });
-    }
+## Features
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+- Responsive design suitable for various screen sizes
+- Navigation bar with links to different sections: Home, Authors, Cart, Contact Us
+- Dynamic rendering of book data
+- Integration with an external API for fetching book information
+- Clean and intuitive user interface
 
-    const newUser = new User({
-      firstName,
-      lastName,
-      email,
-      password: hashedPassword,
-      phoneNumber,
-      address: { street, city, state, postalCode },
-      bonusPoints,
-    });
+## Technologies Used
 
-    await newUser.save();
-    const verificationToken = new VerificationToken({
-      userID: user._id,
-      token: crypto.randomBytes(32).toString("hex"),
-    });
-    await verificationToken.save();
+- React
+- SCSS
+- External API (for fetching book data)
 
-    //*************the link */
-    const link = `http://localhost:5000/${user._id}/verify/${verificationToken.token}`;
+## Setup
 
-    //**HTML TEMPLATE */
-    const htmlTemplate = `
-    <div>
-      <p>Click on the link below to verify your email</p>
-      <a href="${link}">Verify</a>
-    </div>`;
-    await sendEmail(user.email, "Verify Your Email", htmlTemplate);
+To run this project locally, follow these steps:
 
-    //**RESPOND TO THE USER  */
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/BalasimJasim/Wise-Virgil.git
+   ```
 
-    res.status(201).json({
-      message: "We sent to you an email, please verify your email address",
-    });
+Navigate into the project directory:
 
-} catch (error) {
-next(error);
-}
-};
+cd Wise-Virgil
 
-export const loginUser = async (req, res, next) => {
-try {
-const { email, password } = req.body;
-const user = await User.findOne({ email });
-if (!user) {
-return res.status(400).json({ error: "Invalid email or password" });
-}
-const isPasswordMatch = await bcrypt.compare(password, user.password);
-if (!isPasswordMatch) {
-return res.status(400).json({ error: "Invalid email or password" });
-}
-if (!user.isAccountVerified) {
-let verificationToken = await VerificationToken.findOne({
-userID: user.\_id,
-});
+Install dependencies:
 
-      if (!verificationToken) {
-        verificationToken = new VerificationToken({
-          userID: user._id,
-          token: crypto.randomBytes(32).toString("hex"),
-        });
-        await verificationToken.save();
-      }
+npm install
 
-      //** we send verfication email again here,just in case */
-      const link = `http://localhost:5000/${user._id}/verify/${verificationToken.token}`;
+Start the development server:
 
-      const htmlTemplate = `
-      <div>
-        <p>Click on the link below to verify your email</p>
-        <a href="${link}">Verify</a>
-      </div>`;
-      await sendEmail(user.email, "Verify Your Email", htmlTemplate);
+npm run dev
 
-      res.status(201).json({
-        message: "We sent to you an email, please verify your email address",
-      });
-    }
-    const token = user.generateAuthToken();
-    res.status(200).json({
-      _id: user._id,
-      isAdmin: user.isAdmin,
+Open your browser and visit http://localhost:5173 to view the app.
 
-      token,
-      username: user.username,
-    });
-
-} catch (error) {
-next(error);
-}
-};
-
-//\*\* token sign
-const token = jwt.sign({ userID: user.\_id }, process.env.SECRET_KEY, {
-expiresIn: "6h",
-});
-res.status(200).json({ token });
+Usage
+Once the app is running locally, use the navigation bar to explore different sections: Home, Authors, Cart, Contact Us.
